@@ -58,7 +58,7 @@ struct TodayTodoView: View {
                             .foregroundColor(Color("TodoRed"))
                             .padding()
                     }
-                }.padding()
+                }.padding(.horizontal)
                 VStack(spacing: 20) {
                     TextField("", text: $todoContent)
                         .placeholder("이 곳에 할 일을 적어주세요", when: todoContent.isEmpty)
@@ -66,7 +66,8 @@ struct TodayTodoView: View {
                         .foregroundColor(Color("TodoBlue"))
                         .accentColor(Color("TodoBlue"))
                         .environment(\.locale, Locale.init(identifier: "ko"))
-                }.padding(25.0)
+                }.padding(.horizontal, 25.0)
+                    .padding(.vertical, 10.0)
                 Divider()
                     .padding([.leading, .bottom, .trailing])
                 List {
@@ -85,7 +86,7 @@ struct TodayTodoView: View {
                                             updateTodoState(todo: todo)
                                         }
                                     }
-                                Text(Formatter.hour.string(from: todo.time!))
+                                Text(Formatter.hour.string(from: todo.time ?? Date()))
                                     .foregroundColor(Color.secondary)
                             }.frame(width: geometry.size.width)
                         }

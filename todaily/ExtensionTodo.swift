@@ -19,7 +19,7 @@ extension Formatter {
     static let hour: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko")
-        formatter.dateFormat = "MM월 dd일, HH:mm"
+        formatter.dateFormat = "dd일, a h:mm"
         return formatter
     }()
 }
