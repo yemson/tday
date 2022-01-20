@@ -24,8 +24,9 @@ struct TodayTodoView: View {
     @State private var showAddTodoModal: Bool = false
     @State private var showingAlert: Bool = false
     @State private var showWeather: String = ""
+    @State private var todoTime = Date()
     
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Todo.content, ascending: true)], animation: .default)
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Todo.time, ascending: true)], animation: .default)
     private var todos: FetchedResults<Todo>
     
     var body: some View {
@@ -35,7 +36,7 @@ struct TodayTodoView: View {
             VStack {
                 HStack {
                     Button(action: {showAddTodoModal = true}) {
-                        Label("", systemImage: "line.3.horizontal")
+                        Label("", systemImage: "gearshape")
                             .font(.system(size: 25))
                             .foregroundColor(Color("TodoRed"))
                             .padding()
@@ -58,15 +59,20 @@ struct TodayTodoView: View {
                             .padding()
                     }
                 }.padding()
-                TextField("이곳에 할 일을 적어주세요", text: $todoContent)
-                    .padding()
+                VStack(spacing: 20) {
+                    TextField("", text: $todoContent)
+                        .placeholder("이 곳에 할 일을 적어주세요", when: todoContent.isEmpty)
+                    DatePicker("날짜를 선택하세요", selection: $todoTime)
+                        .foregroundColor(Color("TodoBlue"))
+                        .accentColor(Color("TodoBlue"))
+                        .environment(\.locale, Locale.init(identifier: "ko"))
+                }.padding(25.0)
                 Divider()
                     .padding([.leading, .bottom, .trailing])
                 List {
                     ForEach(todos) { todo in
                         GeometryReader { geometry in
                             VStack(alignment: .center) {
-                                Spacer()
                                 Text(todo.content ?? "")
                                     .font(.system(size: 20))
                                     .fontWeight(.bold)
@@ -79,13 +85,15 @@ struct TodayTodoView: View {
                                             updateTodoState(todo: todo)
                                         }
                                     }
-                                Spacer()
+                                Text(Formatter.hour.string(from: todo.time!))
+                                    .foregroundColor(Color.secondary)
                             }.frame(width: geometry.size.width)
                         }
                     }
                     .listRowBackground(Color("TodoBeige"))
                     .listRowSeparator(.hidden)
                 }
+                .environment(\.defaultMinListRowHeight, 65)
                 .environment(\.locale, Locale(identifier: "ko"))
                 .listStyle(.plain)
                 Spacer()
@@ -116,8 +124,11 @@ struct TodayTodoView: View {
         } else if (todoContent != "") {
             let newTodo = Todo(context: viewContext)
             newTodo.content = todoContent
+            newTodo.state = 0
+            newTodo.time = todoTime
             PersistenceController.shared.saveContext()
             todoContent = ""
+            print(newTodo)
         }
     }
     
@@ -185,13 +196,15 @@ struct TodayTodoView: View {
     }
 }
 
-#if canImport(UIKit)
 extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    func placeholder(
+        _ text: String,
+        when shouldShow: Bool,
+        alignment: Alignment = .leading) -> some View {
+            
+        placeholder(when: shouldShow, alignment: alignment) { Text(text).foregroundColor(Color("TodoBlue")) }
     }
 }
-#endif
 
 struct TodayTodoView_Previews: PreviewProvider {
     static var previews: some View {
