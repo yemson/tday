@@ -25,6 +25,7 @@ struct TodayTodoView: View {
     @State private var showingAlert: Bool = false
     @State private var showWeather: String = ""
     @State private var todoTime = Date()
+    @FocusState private var focus: Bool
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Todo.time, ascending: true)], animation: .default)
     private var todos: FetchedResults<Todo>
@@ -52,7 +53,7 @@ struct TodayTodoView: View {
                             .foregroundColor(Color("TodoBlue"))
                     }
                     Spacer()
-                    Button(action: addTodo) {
+                    Button(action: {focus = !focus}) {
                         Label("", systemImage: "plus")
                             .font(.system(size: 25))
                             .foregroundColor(Color("TodoRed"))
@@ -61,6 +62,12 @@ struct TodayTodoView: View {
                 }.padding(.horizontal)
                 VStack(spacing: 20) {
                     TextField("", text: $todoContent)
+                        .focused($focus)
+                        .onSubmit({
+                            addTodo()
+                            focus = true
+                        })
+                        .submitLabel(.done)
                         .placeholder("이 곳에 할 일을 적어주세요", when: todoContent.isEmpty)
                     DatePicker("날짜를 선택하세요", selection: $todoTime)
                         .foregroundColor(Color("TodoBlue"))
@@ -74,23 +81,32 @@ struct TodayTodoView: View {
                     ForEach(todos) { todo in
                         GeometryReader { geometry in
                             VStack(alignment: .center) {
-                                Text(todo.content ?? "")
-                                    .font(.system(size: 20))
-                                    .fontWeight(.bold)
-                                    .foregroundColor(Color("TodoBlue"))
-                                    .strikethrough(todo.state >= 1 ? true : false)
-                                    .onTapGesture {
-                                        if (todo.state >= 1) {
-                                            deleteTodo(todo: todo)
-                                        } else {
+                                HStack {
+                                    Text(todo.content ?? "")
+                                        .font(.system(size: 20))
+                                        .fontWeight(todo.star ? .bold : .semibold)
+                                        .foregroundColor(todo.star ? Color("TodoRed") : Color("TodoBlue"))
+                                        .strikethrough(todo.state ? true : false)
+                                        .onTapGesture {
                                             updateTodoState(todo: todo)
                                         }
-                                    }
+                                }
                                 Text(Formatter.hour.string(from: todo.time ?? Date()))
                                     .foregroundColor(Color.secondary)
                             }.frame(width: geometry.size.width)
+                        }.swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            Button(action: {updateTodoStar(todo: todo)}) {
+                                Label("", systemImage: "star")
+                            }
+                            .tint(Color("TodoBlue"))
+                        }.swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(action: {deleteTodo(todo: todo)}) {
+                                Label("", systemImage: "trash")
+                            }
+                            .tint(Color("TodoRed"))
                         }
                     }
+                    
                     .listRowBackground(Color("TodoBeige"))
                     .listRowSeparator(.hidden)
                 }
@@ -99,12 +115,10 @@ struct TodayTodoView: View {
                 .listStyle(.plain)
                 Spacer()
                 HStack {
-                    Spacer()
                     Label("", systemImage: showWeather)
                         .font(.system(size: 50))
                         .foregroundColor(Color("TodoBlue"))
                         .padding()
-                    Spacer()
                 }
             }
             .sheet(isPresented: $showAddTodoModal) {
@@ -114,7 +128,7 @@ struct TodayTodoView: View {
                 Alert(title: Text("빈 칸은 등록할 수 없습니다!"), message: nil,
                       dismissButton: .default(Text("확인")))
             }.onAppear(perform: loadData)
-                .onAppear (perform : UIApplication.shared.hideKeyboard)
+                .onAppear(perform : UIApplication.shared.hideKeyboard)
         }
         .ignoresSafeArea(.keyboard)
     }
@@ -125,13 +139,19 @@ struct TodayTodoView: View {
         } else if (todoContent != "") {
             let newTodo = Todo(context: viewContext)
             newTodo.content = todoContent
-            newTodo.state = 0
+            newTodo.state = false
             newTodo.time = todoTime
+            newTodo.star = false
             PersistenceController.shared.saveContext()
             todoContent = ""
             print(newTodo)
         }
     }
+    
+    //    private func deleteTodo(offsets: IndexSet) {
+    //        offsets.map { todos[$0] }.forEach(viewContext.delete)
+    //        PersistenceController.shared.saveContext()
+    //    }
     
     private func deleteTodo(todo: Todo) {
         viewContext.delete(todo)
@@ -139,9 +159,13 @@ struct TodayTodoView: View {
     }
     
     private func updateTodoState(todo: Todo) {
-        todo.state += 1
+        todo.state = !todo.state
         PersistenceController.shared.saveContext()
-        print(todo.state)
+    }
+    
+    private func updateTodoStar(todo: Todo) {
+        todo.star = !todo.star
+        PersistenceController.shared.saveContext()
     }
     
     func loadData() {
@@ -203,8 +227,8 @@ extension View {
         when shouldShow: Bool,
         alignment: Alignment = .leading) -> some View {
             
-        placeholder(when: shouldShow, alignment: alignment) { Text(text).foregroundColor(Color("TodoBlue")) }
-    }
+            placeholder(when: shouldShow, alignment: alignment) { Text(text).foregroundColor(Color("TodoBlue")) }
+        }
 }
 
 struct TodayTodoView_Previews: PreviewProvider {
