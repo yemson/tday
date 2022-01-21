@@ -15,8 +15,8 @@
 		87646D1327954D3000D87037 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87646D1127954D3000D87037 /* Model.xcdatamodeld */; };
 		87646D1527954D9C00D87037 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87646D1427954D9C00D87037 /* PersistenceController.swift */; };
 		876FEB6B27981D8400771C46 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 876FEB6D27981D8400771C46 /* Localizable.strings */; };
-		877DE2B02796942600AD7381 /* AddTodoModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877DE2AF2796942600AD7381 /* AddTodoModalView.swift */; };
-		877DE2B52797E76F00AD7381 /* TodayTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877DE2B42797E76F00AD7381 /* TodayTodoView.swift */; };
+		877DE2B02796942600AD7381 /* TodoSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877DE2AF2796942600AD7381 /* TodoSetting.swift */; };
+		877DE2B52797E76F00AD7381 /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877DE2B42797E76F00AD7381 /* TodoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,8 +31,8 @@
 		876FEB67279816C600771C46 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		876FEB6C27981D8400771C46 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		876FEB6E27981DAE00771C46 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
-		877DE2AF2796942600AD7381 /* AddTodoModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoModalView.swift; sourceTree = "<group>"; };
-		877DE2B42797E76F00AD7381 /* TodayTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTodoView.swift; sourceTree = "<group>"; };
+		877DE2AF2796942600AD7381 /* TodoSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoSetting.swift; sourceTree = "<group>"; };
+		877DE2B42797E76F00AD7381 /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,8 +68,8 @@
 			children = (
 				87646D0327954CEF00D87037 /* todailyApp.swift */,
 				87646D0527954CEF00D87037 /* ContentView.swift */,
-				877DE2B42797E76F00AD7381 /* TodayTodoView.swift */,
-				877DE2AF2796942600AD7381 /* AddTodoModalView.swift */,
+				877DE2B42797E76F00AD7381 /* TodoView.swift */,
+				877DE2AF2796942600AD7381 /* TodoSetting.swift */,
 				872C5E5227994715007D6DEC /* ExtensionTodo.swift */,
 				87646D1427954D9C00D87037 /* PersistenceController.swift */,
 				876FEB6D27981D8400771C46 /* Localizable.strings */,
@@ -174,9 +174,9 @@
 			files = (
 				872C5E5327994715007D6DEC /* ExtensionTodo.swift in Sources */,
 				87646D0627954CEF00D87037 /* ContentView.swift in Sources */,
-				877DE2B52797E76F00AD7381 /* TodayTodoView.swift in Sources */,
+				877DE2B52797E76F00AD7381 /* TodoView.swift in Sources */,
 				87646D0427954CEF00D87037 /* todailyApp.swift in Sources */,
-				877DE2B02796942600AD7381 /* AddTodoModalView.swift in Sources */,
+				877DE2B02796942600AD7381 /* TodoSetting.swift in Sources */,
 				87646D1327954D3000D87037 /* Model.xcdatamodeld in Sources */,
 				87646D1527954D9C00D87037 /* PersistenceController.swift in Sources */,
 			);
@@ -331,6 +331,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -344,7 +346,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -364,6 +366,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -377,7 +381,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

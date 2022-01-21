@@ -2,11 +2,13 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21C52" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Todo" representedClassName="Todo" syncable="YES" codeGenerationType="class">
         <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="notiActive" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="star" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="state" optional="YES" attributeType="Boolean" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timeActive" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="Todo" positionX="-63" positionY="-9" width="128" height="89"/>
+        <element name="Todo" positionX="-63" positionY="-9" width="128" height="119"/>
     </elements>
 </model>

@@ -6,14 +6,37 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct ContentView: View {
+    
+    @StateObject var delegate = NotificationDelegate()
+    
     var body: some View {
         ZStack {
             Color("TodoBeige")
                 .edgesIgnoringSafeArea(.all)
-            TodayTodoView()
+            TodoView()
         }
+        .onAppear(perform: {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                if success {
+                    print("All set!")
+                } else if let error = error {
+                    print(error.localizedDescription)
+                }
+            }
+            
+            UNUserNotificationCenter.current().delegate = delegate
+        })
+    }
+}
+
+class NotificationDelegate: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        completionHandler([.badge, .banner, .sound])
     }
 }
 

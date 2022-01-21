@@ -17,7 +17,7 @@ struct WeatherResponse: Decodable {
     let weather: [Weather]
 }
 
-struct TodayTodoView: View {
+struct TodoView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State private var todoContent: String = ""
@@ -25,6 +25,8 @@ struct TodayTodoView: View {
     @State private var showingAlert: Bool = false
     @State private var showWeather: String = ""
     @State private var todoTime = Date()
+    @State private var timeCheck: Bool = false
+    @State private var showSelectTime: Bool = false
     @FocusState private var focus: Bool
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Todo.time, ascending: true)], animation: .default)
@@ -61,18 +63,36 @@ struct TodayTodoView: View {
                     }
                 }.padding(.horizontal)
                 VStack(spacing: 20) {
-                    TextField("", text: $todoContent)
-                        .focused($focus)
-                        .onSubmit({
-                            addTodo()
-                            focus = true
-                        })
-                        .submitLabel(.done)
-                        .placeholder("이 곳에 할 일을 적어주세요", when: todoContent.isEmpty)
-                    DatePicker("날짜를 선택하세요", selection: $todoTime)
-                        .foregroundColor(Color("TodoBlue"))
-                        .accentColor(Color("TodoBlue"))
-                        .environment(\.locale, Locale.init(identifier: "ko"))
+                    HStack {
+                        TextField("", text: $todoContent)
+                            .focused($focus)
+                            .onSubmit({
+                                print(timeCheck)
+                                if (timeCheck == true) {
+                                    createNotification(notiContent: todoContent, notiTime: todoTime)
+                                }
+                                addTodo()
+                                focus = true
+                            })
+                            .submitLabel(.done)
+                            .placeholder("이 곳에 할 일을 적어주세요", when: todoContent.isEmpty)
+                        Button(action: {self.showSelectTime = !self.showSelectTime}) {
+                            Label("", systemImage: self.showSelectTime ? "calendar.badge.minus" : "calendar.badge.plus")
+                                .font(.system(size: 25))
+                                .foregroundColor(Color("TodoBlue"))
+                        }
+                    }
+                    if showSelectTime {
+                        VStack(spacing: 15) {
+                            DatePicker("날짜 선택", selection: $todoTime)
+                                .foregroundColor(Color("TodoBlue"))
+                                .accentColor(Color("TodoBlue"))
+                                .environment(\.locale, Locale.init(identifier: "ko"))
+                            Toggle("알림 받기", isOn: $timeCheck)
+                                .foregroundColor(Color("TodoBlue"))
+                                .tint(Color("TodoBlue"))
+                        }
+                    }
                 }.padding(.horizontal, 25.0)
                     .padding(.vertical, 10.0)
                 Divider()
@@ -81,22 +101,25 @@ struct TodayTodoView: View {
                     ForEach(todos) { todo in
                         GeometryReader { geometry in
                             VStack(alignment: .center) {
-                                HStack {
-                                    Text(todo.content ?? "")
-                                        .font(.system(size: 20))
-                                        .fontWeight(todo.star ? .bold : .semibold)
-                                        .foregroundColor(todo.star ? Color("TodoRed") : Color("TodoBlue"))
-                                        .strikethrough(todo.state ? true : false)
-                                        .onTapGesture {
-                                            updateTodoState(todo: todo)
-                                        }
+                                Text(todo.content ?? "")
+                                    .font(.system(size: 20))
+                                    .fontWeight(todo.star ? .bold : .semibold)
+                                    .foregroundColor(todo.star ? Color("TodoRed") : Color("TodoBlue"))
+                                    .strikethrough(todo.state ? true : false)
+                                    .onTapGesture {
+                                        updateTodoState(todo: todo)
+                                    }
+                                if todo.timeActive {
+                                    HStack {
+                                        Text(Formatter.hour.string(from: todo.time ?? Date()))
+                                            .foregroundColor(todo.notiActive ? Color("TodoRed") : Color.secondary)
+                                    }
                                 }
-                                Text(Formatter.hour.string(from: todo.time ?? Date()))
-                                    .foregroundColor(Color.secondary)
                             }.frame(width: geometry.size.width)
-                        }.swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            
+                        }.swipeActions(edge: .leading, allowsFullSwipe: false) {
                             Button(action: {updateTodoStar(todo: todo)}) {
-                                Label("", systemImage: "star")
+                                Label("", systemImage: todo.star ? "star.slash" : "star")
                             }
                             .tint(Color("TodoBlue"))
                         }.swipeActions(edge: .trailing, allowsFullSwipe: true) {
@@ -106,7 +129,6 @@ struct TodayTodoView: View {
                             .tint(Color("TodoRed"))
                         }
                     }
-                    
                     .listRowBackground(Color("TodoBeige"))
                     .listRowSeparator(.hidden)
                 }
@@ -122,7 +144,7 @@ struct TodayTodoView: View {
                 }
             }
             .sheet(isPresented: $showAddTodoModal) {
-                AddTodoModalView()
+                TodoSetting()
             }
             .alert(isPresented: $showingAlert) {
                 Alert(title: Text("빈 칸은 등록할 수 없습니다!"), message: nil,
@@ -141,7 +163,9 @@ struct TodayTodoView: View {
             newTodo.content = todoContent
             newTodo.state = false
             newTodo.time = todoTime
+            newTodo.timeActive = showSelectTime
             newTodo.star = false
+            newTodo.notiActive = timeCheck
             PersistenceController.shared.saveContext()
             todoContent = ""
             print(newTodo)
@@ -197,6 +221,9 @@ struct TodayTodoView: View {
                     case "broken clouds":
                         showWeather = "cloud"
                         break
+                    case "overcast clouds":
+                        showWeather = "cloud"
+                        break
                     case "shower rain":
                         showWeather = "cloud.drizzle"
                         break
@@ -219,6 +246,19 @@ struct TodayTodoView: View {
             }
         }.resume()
     }
+    
+    func createNotification(notiContent: String, notiTime: Date) {
+        let content = UNMutableNotificationContent()
+        content.title = "티디"
+        content.subtitle = notiContent
+        content.sound = .default
+        
+        let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: notiTime)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: notiContent, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request)
+    }
 }
 
 extension View {
@@ -229,10 +269,4 @@ extension View {
             
             placeholder(when: shouldShow, alignment: alignment) { Text(text).foregroundColor(Color("TodoBlue")) }
         }
-}
-
-struct TodayTodoView_Previews: PreviewProvider {
-    static var previews: some View {
-        TodayTodoView()
-    }
 }
