@@ -9,25 +9,40 @@ import SwiftUI
 
 struct TodoSetting: View {
     
-    @StateObject var delegate = NotificationDelegate()
+    @AppStorage("weatherRegion") var weatherRegion: String = ""
+    var todoView: TodoView = TodoView()
     
     var body: some View {
-        VStack {
-            Button("Schedule Notification") {
-                let content = UNMutableNotificationContent()
-                content.title = "티디"
-                content.subtitle = "당근 사기"
-                content.sound = UNNotificationSound.default
-                
-                // show this notification five seconds from now
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-                
-                // choose a random identifier
-                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                
-                // add our notification request
-                UNUserNotificationCenter.current().add(request)
+        NavigationView {
+            Form {
+                Section(header: Text("날씨 지역 설정"), content: {
+                    Menu("지역 선택") {
+                        Button(action: {
+                            weatherRegion = "Seoul"
+                            todoView.loadData()
+                        }) {
+                            Text("서울")
+                        }
+                        Button(action: {
+                            weatherRegion = "Busan"
+                            todoView.loadData()
+                        }) {
+                            Text("부산")
+                        }
+                    }
+                    HStack {
+                        Text("현재 선택된 지역")
+                        Spacer()
+                        Text("부산")
+                            .foregroundColor(Color.secondary)
+                    }
+                })
+                Section(header: Text("테마 설정"), content: {
+                    Text("만드는 중...")
+                        .foregroundColor(Color.secondary)
+                })
             }
+            .navigationTitle("설정")
         }
     }
 }

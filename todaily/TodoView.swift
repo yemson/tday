@@ -19,11 +19,12 @@ struct WeatherResponse: Decodable {
 
 struct TodoView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
+    @AppStorage("weatherRegion") var weatherRegion: String = ""
+    @AppStorage("weatherIcon") var weatherIcon: String = ""
     @State private var todoContent: String = ""
     @State private var showAddTodoModal: Bool = false
     @State private var showingAlert: Bool = false
-    @State private var showWeather: String = ""
+    @State var showWeather: String = ""
     @State private var todoTime = Date()
     @State private var timeCheck: Bool = false
     @State private var showSelectTime: Bool = false
@@ -138,7 +139,7 @@ struct TodoView: View {
                 .listStyle(.plain)
                 Spacer()
                 HStack {
-                    Label("", systemImage: showWeather)
+                    Label("", systemImage: weatherIcon)
                         .font(.system(size: 50))
                         .foregroundColor(Color("TodoBlue"))
                         .padding()
@@ -194,10 +195,10 @@ struct TodoView: View {
     }
     
     func loadData() {
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=Busan&appid=8e71ae892d923505cdcff82dafb4ed43") else {
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(weatherRegion)&appid=8e71ae892d923505cdcff82dafb4ed43") else {
             fatalError("Invalid URL")
         }
-        
+        print(weatherRegion)
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else {
                 return
@@ -205,46 +206,28 @@ struct TodoView: View {
             
             let result = try? JSONDecoder().decode(WeatherResponse.self, from: data)
             if let result = result {
-                print(result)
                 result.weather.forEach {
-                    print($0.main)
                     print($0.description)
-                    switch $0.description {
-                    case "clear sky":
-                        showWeather = "sun.max"
-                        break
-                    case "few clouds":
-                        showWeather = "cloud.sun"
-                        break
-                    case "scattered clouds":
-                        showWeather = "cloud"
-                        break
-                    case "broken clouds":
-                        showWeather = "cloud"
-                        break
-                    case "overcast clouds":
-                        showWeather = "cloud"
-                        break
-                    case "shower rain":
-                        showWeather = "cloud.drizzle"
-                        break
-                    case "rain":
-                        showWeather = "cloud.rain"
-                        break
-                    case "thunderstorm":
-                        showWeather = "cloud.bolt"
-                        break
-                    case "snow":
-                        showWeather = "cloud.snow"
-                        break
-                    case "mist":
-                        showWeather = "cloud.fog"
-                        break
-                    default:
-                        break
+                    if ($0.description == "clear sky") {
+                        weatherIcon = "sun.max"
+                    } else if ($0.description == "few clouds") {
+                        weatherIcon = "cloud.sun"
+                    } else if ($0.description == "scattered clouds" || $0.description == "broken clouds" || $0.description == "overcast clouds") {
+                        weatherIcon = "cloud"
+                    } else if ($0.description == "shower rain") {
+                        weatherIcon = "cloud.drizzle"
+                    } else if ($0.description == "rain") {
+                        weatherIcon = "cloud.rain"
+                    } else if ($0.description == "thunderstorm") {
+                        weatherIcon = "cloud.bolt"
+                    } else if ($0.description == "snow") {
+                        weatherIcon = "cloud.snow"
+                    } else if ($0.description == "mist") {
+                        weatherIcon = "cloud.fog"
                     }
                 }
             }
+            print(weatherIcon)
         }.resume()
     }
     
