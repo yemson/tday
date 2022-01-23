@@ -33,7 +33,7 @@ struct TodoSetting: View {
                     HStack {
                         Text("현재 선택된 지역")
                         Spacer()
-                        Text("부산")
+                        Text(weatherRegion == "Busan" ? "부산" : "서울")
                             .foregroundColor(Color.secondary)
                     }
                 })
