@@ -113,6 +113,7 @@ struct TodoView: View {
                                     HStack {
                                         Text(Formatter.hour.string(from: todo.time ?? Date()))
                                             .foregroundColor(todo.notiActive ? Color("TodoRed") : Color.secondary)
+                                            .strikethrough(todo.time! < Date() ? true : false)
                                     }
                                 }
                             }.frame(width: geometry.size.width)
