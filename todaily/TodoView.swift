@@ -19,6 +19,7 @@ struct WeatherResponse: Decodable {
 
 struct TodoView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.scenePhase) var scenePhase
     @AppStorage("weatherRegion") var weatherRegion: String = ""
     @AppStorage("weatherIcon") var weatherIcon: String = ""
     @State private var todoContent: String = ""
@@ -28,6 +29,9 @@ struct TodoView: View {
     @State private var todoTime = Date()
     @State private var timeCheck: Bool = false
     @State private var showSelectTime: Bool = false
+    @State private var timeNow = Date()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     @FocusState private var focus: Bool
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Todo.time, ascending: true)], animation: .default)
@@ -114,7 +118,7 @@ struct TodoView: View {
                                     HStack {
                                         Text(Formatter.hour.string(from: todo.time ?? Date()))
                                             .foregroundColor(todo.notiActive ? Color("TodoRed") : Color.secondary)
-                                            .strikethrough(todo.time! < Date() ? true : false)
+                                            .strikethrough(todo.time! < timeNow ? true : false)
                                     }
                                 }
                             }.frame(width: geometry.size.width)
@@ -153,6 +157,16 @@ struct TodoView: View {
                       dismissButton: .default(Text("확인")))
             }.onAppear(perform: loadData)
                 .onAppear(perform : UIApplication.shared.hideKeyboard)
+                .onChange(of: scenePhase) { newPhase in
+                    if newPhase == .active {
+                        loadData()
+                        todoTime = Date()
+                    }
+                }
+                .onReceive(timer) { _ in
+                    self.timeNow = Date()
+                    self.todoTime = Date()
+                }
         }
         .ignoresSafeArea(.keyboard)
     }
