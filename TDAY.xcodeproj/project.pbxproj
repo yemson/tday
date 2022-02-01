@@ -21,7 +21,7 @@
 
 /* Begin PBXFileReference section */
 		872C5E5227994715007D6DEC /* ExtensionTodo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTodo.swift; sourceTree = "<group>"; };
-		87646D0027954CEF00D87037 /* todaily.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todaily.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		87646D0027954CEF00D87037 /* TDAY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TDAY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87646D0327954CEF00D87037 /* todailyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todailyApp.swift; sourceTree = "<group>"; };
 		87646D0527954CEF00D87037 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		87646D0727954CF300D87037 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,7 +57,7 @@
 		87646D0127954CEF00D87037 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				87646D0027954CEF00D87037 /* todaily.app */,
+				87646D0027954CEF00D87037 /* TDAY.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,9 +98,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		87646CFF27954CEF00D87037 /* todaily */ = {
+		87646CFF27954CEF00D87037 /* TDAY */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 87646D0E27954CF300D87037 /* Build configuration list for PBXNativeTarget "todaily" */;
+			buildConfigurationList = 87646D0E27954CF300D87037 /* Build configuration list for PBXNativeTarget "TDAY" */;
 			buildPhases = (
 				87646CFC27954CEF00D87037 /* Sources */,
 				87646CFD27954CEF00D87037 /* Frameworks */,
@@ -110,11 +110,11 @@
 			);
 			dependencies = (
 			);
-			name = todaily;
+			name = TDAY;
 			packageProductDependencies = (
 			);
 			productName = todaily;
-			productReference = 87646D0027954CEF00D87037 /* todaily.app */;
+			productReference = 87646D0027954CEF00D87037 /* TDAY.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -132,7 +132,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 87646CFB27954CEF00D87037 /* Build configuration list for PBXProject "todaily" */;
+			buildConfigurationList = 87646CFB27954CEF00D87037 /* Build configuration list for PBXProject "TDAY" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -148,7 +148,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				87646CFF27954CEF00D87037 /* todaily */,
+				87646CFF27954CEF00D87037 /* TDAY */,
 			);
 		};
 /* End PBXProject section */
@@ -236,7 +236,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -292,7 +292,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -315,6 +315,7 @@
 				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = todaily/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TDAY;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -350,6 +351,7 @@
 				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = todaily/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TDAY;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -375,7 +377,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		87646CFB27954CEF00D87037 /* Build configuration list for PBXProject "todaily" */ = {
+		87646CFB27954CEF00D87037 /* Build configuration list for PBXProject "TDAY" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87646D0C27954CF300D87037 /* Debug */,
@@ -384,7 +386,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		87646D0E27954CF300D87037 /* Build configuration list for PBXNativeTarget "todaily" */ = {
+		87646D0E27954CF300D87037 /* Build configuration list for PBXNativeTarget "TDAY" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87646D0F27954CF300D87037 /* Debug */,

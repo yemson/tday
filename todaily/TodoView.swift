@@ -188,11 +188,6 @@ struct TodoView: View {
         }
     }
     
-    //    private func deleteTodo(offsets: IndexSet) {
-    //        offsets.map { todos[$0] }.forEach(viewContext.delete)
-    //        PersistenceController.shared.saveContext()
-    //    }
-    
     private func deleteTodo(todo: Todo) {
         viewContext.delete(todo)
         PersistenceController.shared.saveContext()
@@ -247,7 +242,7 @@ struct TodoView: View {
     
     func createNotification(notiContent: String, notiTime: Date) {
         let content = UNMutableNotificationContent()
-        content.title = "티디"
+        content.title = "TDAY"
         content.subtitle = notiContent
         content.sound = .default
         
