@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "87646CFF27954CEF00D87037"
-               BuildableName = "todaily.app"
+               BuildableName = "TDAY.app"
                BlueprintName = "TDAY"
                ReferencedContainer = "container:TDAY.xcodeproj">
             </BuildableReference>
@@ -44,7 +44,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "87646CFF27954CEF00D87037"
-            BuildableName = "todaily.app"
+            BuildableName = "TDAY.app"
             BlueprintName = "TDAY"
             ReferencedContainer = "container:TDAY.xcodeproj">
          </BuildableReference>

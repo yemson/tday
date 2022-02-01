@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		872C5E5327994715007D6DEC /* ExtensionTodo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C5E5227994715007D6DEC /* ExtensionTodo.swift */; };
+		874DDD6C27A955290067A8D7 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874DDD6B27A955290067A8D7 /* Storage.swift */; };
+		874DDD6E27A955D40067A8D7 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 874DDD6D27A955D40067A8D7 /* Launch Screen.storyboard */; };
 		87646D0427954CEF00D87037 /* todailyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87646D0327954CEF00D87037 /* todailyApp.swift */; };
 		87646D0627954CEF00D87037 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87646D0527954CEF00D87037 /* ContentView.swift */; };
 		87646D0827954CF300D87037 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87646D0727954CF300D87037 /* Assets.xcassets */; };
@@ -16,11 +18,12 @@
 		87646D1527954D9C00D87037 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87646D1427954D9C00D87037 /* PersistenceController.swift */; };
 		877DE2B02796942600AD7381 /* TodoSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877DE2AF2796942600AD7381 /* TodoSetting.swift */; };
 		877DE2B52797E76F00AD7381 /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877DE2B42797E76F00AD7381 /* TodoView.swift */; };
-		879277D927A3F97100CFC8AF /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879277D827A3F97100CFC8AF /* Storage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		872C5E5227994715007D6DEC /* ExtensionTodo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionTodo.swift; sourceTree = "<group>"; };
+		874DDD6B27A955290067A8D7 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Storage.swift; path = ../../../.Trash/todaily/tday/Storage.swift; sourceTree = "<group>"; };
+		874DDD6D27A955D40067A8D7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		87646D0027954CEF00D87037 /* TDAY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TDAY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87646D0327954CEF00D87037 /* todailyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todailyApp.swift; sourceTree = "<group>"; };
 		87646D0527954CEF00D87037 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -31,7 +34,6 @@
 		876FEB67279816C600771C46 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		877DE2AF2796942600AD7381 /* TodoSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoSetting.swift; sourceTree = "<group>"; };
 		877DE2B42797E76F00AD7381 /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
-		879277D827A3F97100CFC8AF /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,8 +70,9 @@
 				87646D0327954CEF00D87037 /* todailyApp.swift */,
 				87646D0527954CEF00D87037 /* ContentView.swift */,
 				877DE2B42797E76F00AD7381 /* TodoView.swift */,
-				879277D827A3F97100CFC8AF /* Storage.swift */,
+				874DDD6B27A955290067A8D7 /* Storage.swift */,
 				877DE2AF2796942600AD7381 /* TodoSetting.swift */,
+				874DDD6D27A955D40067A8D7 /* Launch Screen.storyboard */,
 				872C5E5227994715007D6DEC /* ExtensionTodo.swift */,
 				87646D1427954D9C00D87037 /* PersistenceController.swift */,
 				87646D1127954D3000D87037 /* Model.xcdatamodeld */,
@@ -158,6 +161,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				874DDD6E27A955D40067A8D7 /* Launch Screen.storyboard in Resources */,
 				87646D0B27954CF300D87037 /* Preview Assets.xcassets in Resources */,
 				87646D0827954CF300D87037 /* Assets.xcassets in Resources */,
 			);
@@ -175,7 +179,7 @@
 				877DE2B52797E76F00AD7381 /* TodoView.swift in Sources */,
 				87646D0427954CEF00D87037 /* todailyApp.swift in Sources */,
 				877DE2B02796942600AD7381 /* TodoSetting.swift in Sources */,
-				879277D927A3F97100CFC8AF /* Storage.swift in Sources */,
+				874DDD6C27A955290067A8D7 /* Storage.swift in Sources */,
 				87646D1327954D3000D87037 /* Model.xcdatamodeld in Sources */,
 				87646D1527954D9C00D87037 /* PersistenceController.swift in Sources */,
 			);
@@ -319,6 +323,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -355,6 +360,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
